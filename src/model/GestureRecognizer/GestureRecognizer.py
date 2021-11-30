@@ -12,6 +12,3 @@ class GestureRecognizer(ABC):
         # TODO Написать список жестов
         """Returns most likely gesture"""
 
-    @abstractmethod
-    def get_predictions(self) -> ndarray:
-        """Returns probabilities of gestures"""
