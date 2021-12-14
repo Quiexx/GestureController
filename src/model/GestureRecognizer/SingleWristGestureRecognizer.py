@@ -37,6 +37,7 @@ class SingleWristGestureRecognizer(GestureRecognizer):
             position = self.__hand_tracker.find_hands(frame)
             hand_track = self.__data_preparator.get_data(position)
             probs = self.__gesture_classifier.predict(hand_track)
+
         except Exception as exc:
             time = datetime.datetime.now()
             self.__logger.exception("Exception {}".format(time), exc_info=exc)
