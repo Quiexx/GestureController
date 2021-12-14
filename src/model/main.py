@@ -12,11 +12,13 @@ while stream.is_ready():
 
     if not result:
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+        img = cv2.flip(img, 1)
         cv2.imshow("StreamTest", img)
     else:
         x, y = result
         new_img = cv2.circle(img, (x, y), 7, (255, 0, 0), -1)
         new_img = cv2.cvtColor(new_img, cv2.COLOR_RGB2BGR)
+        new_img = cv2.flip(new_img, 1)
         cv2.imshow("StreamTest", new_img)
 
     if cv2.waitKey(5) & 0xFF == 27:
