@@ -21,12 +21,13 @@ connections = {
 
 
 def draw_marks(img, result, pt_clr=(0, 255, 255), con_clr=(224, 255, 255)):
-    for mark in result:
-        x, y = mark['x'], mark['y']
-        img = cv2.circle(img, (x, y), 6, pt_clr, -1)
 
     for pt1, pts in connections.items():
         for pt2 in pts:
-            img = cv2.line(img, (result[pt1]['x'], result[pt1]['y']), (result[pt2]['x'], result[pt2]['y']), con_clr)
+            img = cv2.line(img, (result[pt1]['x'], result[pt1]['y']), (result[pt2]['x'], result[pt2]['y']), con_clr, 2)
+
+    for mark in result:
+        x, y = mark['x'], mark['y']
+        img = cv2.circle(img, (x, y), 6, pt_clr, -1)
 
     return img
