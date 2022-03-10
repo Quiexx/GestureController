@@ -1,3 +1,5 @@
+from numpy import ndarray
+
 from src.IoC.IoC import ioc
 from src.model.DataPreparator.IDataPreparator import IDataPreparator
 from src.model.Gesture.IGesture import IGesture
@@ -22,7 +24,7 @@ class OneModelRecognizer(IGestureRecognizer):
 
 
     def get_gesture(self) -> IGesture:
-        positions = self.hand_tracker.find_marks(self.video.get_frame())
+        positions: dict = self.hand_tracker.find_marks(self.video.get_frame())
         self.dp.prepare(positions)
-        trajectory = self.classifier.predict(self.dp.get_data())
+        trajectory: ndarray = self.classifier.predict(self.dp.get_data())
         return ioc("Gesture.Get", trajectory=trajectory)
