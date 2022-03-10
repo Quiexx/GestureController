@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 from numpy import ndarray
 
 
-class DataPreparator(ABC):
+class IGestureClassifier(ABC):
 
     @abstractmethod
-    def get_data(self, position) -> ndarray:
+    def predict(self, hand_track) -> ndarray:
         pass
