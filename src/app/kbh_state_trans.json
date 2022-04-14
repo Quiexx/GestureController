@@ -1,0 +1,29 @@
+{
+  "DEFAULT": {
+    "0": "DEFAULT",
+    "1": "DEFAULT",
+    "2": "DEFAULT",
+    "3": "DEFAULT",
+    "4": "NEXT_TAB",
+    "5": "PREV_TAB",
+    "6": "DEFAULT"
+  },
+  "NEXT_TAB": {
+    "0": "DEFAULT",
+    "1": "DEFAULT",
+    "2": "DEFAULT",
+    "3": "DEFAULT",
+    "4": "DEFAULT",
+    "5": "DEFAULT",
+    "6": "DEFAULT"
+  },
+  "PREV_TAB": {
+    "0": "DEFAULT",
+    "1": "DEFAULT",
+    "2": "DEFAULT",
+    "3": "DEFAULT",
+    "4": "DEFAULT",
+    "5": "DEFAULT",
+    "6": "DEFAULT"
+  }
+}

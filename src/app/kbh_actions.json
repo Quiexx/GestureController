@@ -1,0 +1,10 @@
+{
+  "DEFAULT": {
+    "4": "Ctrl+Tab",
+    "5": "Ctrl+Shift+Tab"
+  },
+  "NEXT_TAB": {
+  },
+  "PREV_TAB": {
+  }
+}
