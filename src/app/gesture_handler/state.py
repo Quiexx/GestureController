@@ -1,9 +1,8 @@
 import json
 from abc import ABC, abstractmethod
 
-import keyboard
-
 from src.app.config import STATE_TRANS_PATH, ACTIONS_PATH
+from src.app.action import action
 
 
 class State(ABC):
@@ -53,7 +52,6 @@ def get_state(name: str) -> 'State':
 
             kb_action = actions.get(str(value))
             if kb_action:
-                keyboard.press(kb_action)
-                keyboard.release(kb_action)
+                getattr(action, kb_action)().execute()
 
     return NewState()
