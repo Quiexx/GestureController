@@ -6,7 +6,7 @@ from numpy import ndarray
 import numpy as np
 import mediapipe as mp
 
-from src.app.config import MODEL_COMPLEXITY, MIN_DETECTION_CONFIDENCE, MIN_TRACKING_CONFIDENCE
+from src.app.config import MODEL_COMPLEXITY, MIN_DETECTION_CONFIDENCE, MIN_TRACKING_CONFIDENCE, GESTURE_ICONS
 from src.app.model.classifier.gesture import GestureClassifier
 
 
@@ -98,9 +98,13 @@ class GestureModelManager(ModelManager):
                 flipped_horizontally = True
 
                 if self.draw_result:
-                    image = cv2.rectangle(image, (10, 10), (400, 45), (0, 0, 0), -1)
-                    image = cv2.putText(image, f"Gesture number: {gest_num} ({prob}%)",
-                                        (40, 40), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 2)
+                    gesture_icon = GESTURE_ICONS[gest_num]
+                    gesture_icon = np.array(gesture_icon)
+                    h, w, _ = gesture_icon.shape
+                    image[:h, :w] = gesture_icon
+                    # image = cv2.rectangle(image, (60, 10), (400, 45), (0, 0, 0), -1)
+                    image = cv2.putText(image, f"{gest_num} ({prob}%)",
+                                        (105, 110), cv2.FONT_HERSHEY_PLAIN, 0.8, (255, 255, 255), 1)
 
         if not flipped_horizontally:
             image = cv2.flip(image, 1)

@@ -79,7 +79,7 @@ class RecognitionView(Image):
         frame = np.array(pil_image)
 
         frame, gest_num = self.model_manager.handle_image(frame)
-        self.gesture_handler.handle(gest_num)
+        # self.gesture_handler.handle(gest_num)
 
         self.texture = Texture.create(texture.size, colorfmt='rgb')
         self.texture.blit_buffer(frame.tobytes(), colorfmt='rgb', bufferfmt="ubyte")
