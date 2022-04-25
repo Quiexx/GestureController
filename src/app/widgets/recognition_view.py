@@ -6,7 +6,6 @@ from kivy.core.camera import Camera as CoreCamera
 from kivy.properties import NumericProperty, ListProperty, \
     BooleanProperty
 
-from src.app.gesture_handler.gesture_handler import GestureHandler, KeyboardGestureHandler
 from src.app.model.model_manager import GestureModelManager, ModelManager
 
 
@@ -54,6 +53,7 @@ class RecognitionView(Image):
     '''
     show_hands = BooleanProperty(False)
     show_gesture = BooleanProperty(False)
+    show_cam = BooleanProperty(False)
 
     def __init__(self, **kwargs):
         self._camera = None
@@ -68,8 +68,6 @@ class RecognitionView(Image):
             on_index()
 
         self.model_manager: ModelManager = GestureModelManager()
-        self.gesture_handler: GestureHandler = KeyboardGestureHandler()
-        # self.bind(show_hands=self.__change_show_hands_on_model)
 
     def on_tex(self, camera):
         texture = camera.texture
@@ -78,8 +76,7 @@ class RecognitionView(Image):
         pil_image = PIL.Image.frombytes(mode='RGBA', size=size, data=pixels).convert('RGB')
         frame = np.array(pil_image)
 
-        frame, gest_num = self.model_manager.handle_image(frame)
-        self.gesture_handler.handle(gest_num)
+        frame = self.model_manager.handle_image(frame)
 
         self.texture = Texture.create(texture.size, colorfmt='rgb')
         self.texture.blit_buffer(frame.tobytes(), colorfmt='rgb', bufferfmt="ubyte")
@@ -126,3 +123,6 @@ class RecognitionView(Image):
 
     def on_show_gesture(self, instance, value):
         self.model_manager.draw_result = value
+
+    def on_show_cam(self, instance, value):
+        self.model_manager.show_image = value

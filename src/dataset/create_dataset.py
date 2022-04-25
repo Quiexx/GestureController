@@ -72,17 +72,13 @@ with mp_hands.Hands(
         success, image = cap.read()
         if not success:
             print("Ignoring empty camera frame.")
-            # If loading a video, use 'break' instead of 'continue'.
             continue
 
-        # To improve performance, optionally mark the image as not writeable to
-        # pass by reference.
         image.flags.writeable = False
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         results = hands.process(image)
         image = np.zeros_like(image)
 
-        # Draw the hand annotations on the image.
         image.flags.writeable = True
 
         coords = []
@@ -102,7 +98,6 @@ with mp_hands.Hands(
                 mp_hands.HAND_CONNECTIONS,
                 mp_drawing_styles.get_default_hand_landmarks_style(),
                 mp_drawing_styles.get_default_hand_connections_style())
-        # Flip the image horizontally for a selfie-view display.
 
         image = cv2.flip(image, 1)
 
@@ -162,15 +157,8 @@ with mp_hands.Hands(
 
                     shot_count_dict[gest_code] = shot_count_dict.get(gest_code, 0)
                     shot_count_dict[gest_code] += 1
-                    # if shots_made == shots_per_gesture:
-                    #     shots_made = 0
-                    #     current_gesture += 1
-
-                    # if current_gesture == len(gesture_names):
-                    #     break
 
         elif key == 9:
-            # shots_made = 0
             current_gesture += 1
             if current_gesture == len(gesture_names):
                 break
