@@ -1,14 +1,15 @@
 import json
 from abc import ABC, abstractmethod
+from typing import Any
 
-from src.app.config import STATE_TRANS_PATH, ACTIONS_PATH
 from src.app.action import action
+from src.app.config import STATE_TRANS_PATH, ACTIONS_PATH
 
 
 class State(ABC):
 
     @abstractmethod
-    def next_state(self, value) -> 'State':
+    def next_state(self, gest_num: int) -> 'State':
         pass
 
     @abstractmethod
@@ -16,11 +17,11 @@ class State(ABC):
         pass
 
     @abstractmethod
-    def action(self, value) -> None:
+    def action(self, gest_num: int) -> None:
         pass
 
 
-def get_state(name: str) -> 'State':
+def get_state(name: str, instance: Any) -> 'State':
     with open(STATE_TRANS_PATH, 'r') as f:
         state_dict = json.load(f)
 
@@ -35,23 +36,16 @@ def get_state(name: str) -> 'State':
     if actions is None:
         raise ValueError("No such state name in {}: {}".format(ACTIONS_PATH, name))
 
-    class NewState(State):
+    class HandlerState(State):
 
-        def next_state(self, value) -> 'State':
-            if value is None:
-                return self
-            return get_state(trans.get(str(value)))
+        def next_state(self, gest_num: int) -> 'State':
+            return get_state(trans.get(str(gest_num)), instance)
 
         def get_name(self) -> str:
             return name
 
-        def action(self, value) -> None:
+        def action(self, gest_num: int) -> None:
+            action_name = actions.get(str(gest_num))
+            getattr(action, action_name)(instance).execute()
 
-            if value is None:
-                return
-
-            kb_action = actions.get(str(value))
-            if kb_action:
-                getattr(action, kb_action)().execute()
-
-    return NewState()
+    return HandlerState()

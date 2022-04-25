@@ -1,0 +1,38 @@
+{
+  "NEUTRAL": {
+    "0": "OpenTaskBar",
+    "1": "Click",
+    "2": "DoNothing",
+    "3": "PrevTab",
+    "4": "NextTab",
+    "5": "MoveMouse",
+    "6": "DoNothing",
+    "7": "DoNothing",
+    "8": "DoNothing",
+    "None": "DoNothing"
+  },
+  "NEXT_TAB": {
+    "0": "DoNothing",
+    "1": "DoNothing",
+    "2": "DoNothing",
+    "3": "DoNothing",
+    "4": "DoNothing",
+    "5": "DoNothing",
+    "6": "DoNothing",
+    "7": "DoNothing",
+    "8": "DoNothing",
+    "None": "DoNothing"
+  },
+  "PREV_TAB": {
+    "0": "DoNothing",
+    "1": "DoNothing",
+    "2": "DoNothing",
+    "3": "DoNothing",
+    "4": "DoNothing",
+    "5": "DoNothing",
+    "6": "DoNothing",
+    "7": "DoNothing",
+    "8": "DoNothing",
+    "None": "DoNothing"
+  }
+}

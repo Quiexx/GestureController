@@ -1,0 +1,38 @@
+{
+  "NEUTRAL": {
+    "0": "NEUTRAL",
+    "1": "NEUTRAL",
+    "2": "NEUTRAL",
+    "3": "PREV_TAB",
+    "4": "NEXT_TAB",
+    "5": "NEUTRAL",
+    "6": "NEUTRAL",
+    "7": "NEUTRAL",
+    "8": "NEUTRAL",
+    "None": "NEUTRAL"
+  },
+  "NEXT_TAB": {
+    "0": "NEUTRAL",
+    "1": "NEUTRAL",
+    "2": "NEUTRAL",
+    "3": "NEUTRAL",
+    "4": "NEXT_TAB",
+    "5": "NEUTRAL",
+    "6": "NEUTRAL",
+    "7": "NEUTRAL",
+    "8": "NEUTRAL",
+    "None": "NEUTRAL"
+  },
+  "PREV_TAB": {
+    "0": "NEUTRAL",
+    "1": "NEUTRAL",
+    "2": "NEUTRAL",
+    "3": "PREV_TAB",
+    "4": "NEUTRAL",
+    "5": "NEUTRAL",
+    "6": "NEUTRAL",
+    "7": "NEUTRAL",
+    "8": "NEUTRAL",
+    "None": "NEUTRAL"
+  }
+}

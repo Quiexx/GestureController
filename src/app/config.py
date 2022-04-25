@@ -14,11 +14,11 @@ MODEL_COMPLEXITY = 0
 MIN_DETECTION_CONFIDENCE = 0.5
 MIN_TRACKING_CONFIDENCE = 0.5
 
-# KB Gesture Handler
+# Gesture Handler
 
-STATE_TRANS_PATH = os.path.abspath("kbh_state_trans.json")
-ACTIONS_PATH = os.path.abspath("kbh_actions.json")
-KBH_START_STATE = "DEFAULT"
+STATE_TRANS_PATH = os.path.abspath("handler_config/kbm_state_trans.json")
+ACTIONS_PATH = os.path.abspath("handler_config/kbm_actions.json")
+START_STATE = "NEUTRAL"
 
 # Gesture Manager
 gesture_name_mapping = "gesture_names_mapping.json"
@@ -33,5 +33,7 @@ gesture_icons_path = os.path.abspath("../icons/gesture")
 with open(gesture_icons_mapping, "r", encoding="utf8") as f:
     GESTURE_ICONS = {int(num): Image.open(os.path.join(gesture_icons_path, icon_file)).convert('RGB')
                      for num, icon_file in json.load(f).items()}
+
+MIN_GESTURE_CONFIDENCE = 0.85
 
 
