@@ -106,8 +106,8 @@ class GestureModelManager(ModelManager):
 
             if results.multi_hand_landmarks:
                 hand_landmarks = results.multi_hand_landmarks[0]
-                data = [[hand_landmarks.landmark[lm].x, hand_landmarks.landmark[lm].y] for lm in
-                        self._mp_hands.HandLandmark]
+                data = [[hand_landmarks.landmark[lm].x, hand_landmarks.landmark[lm].y, hand_landmarks.landmark[lm].z]
+                        for lm in self._mp_hands.HandLandmark]
 
                 data_np = np.array(data).reshape(-1).reshape(1, -1)
                 res = self._model.predict(data_np)

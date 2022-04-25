@@ -4,7 +4,7 @@ from PIL import Image
 
 # Gesture classifier
 
-GESTURE_CLASSIFIER_LEARNED_MODEL = "gesture_cls9_ac995.pkl"
+GESTURE_CLASSIFIER_LEARNED_MODEL = "gesture3D_BLRLS_cls9_acc966.pkl"
 GESTURE_CLASSIFIER_DEVICE = "cpu"
 GESTURE_CLASSIFIER_PATH = os.path.abspath(os.path.join("model/learned_models/", GESTURE_CLASSIFIER_LEARNED_MODEL))
 
@@ -34,6 +34,6 @@ with open(gesture_icons_mapping, "r", encoding="utf8") as f:
     GESTURE_ICONS = {int(num): Image.open(os.path.join(gesture_icons_path, icon_file)).convert('RGB')
                      for num, icon_file in json.load(f).items()}
 
-MIN_GESTURE_CONFIDENCE = 0.85
+MIN_GESTURE_CONFIDENCE = 0.8
 
 

@@ -67,10 +67,12 @@ class MoveMouse(Action):
 
     def execute(self) -> None:
         w, h = pyautogui.size()
-        x, y = self.__handler.current_data[8]
+        x, y = self.__handler.current_data[8][0], self.__handler.current_data[8][1]
         y = min(max(y - 0.14, 0) / 0.33, 1)
         x = min(max(x - 0.17, 0) / 0.53, 1)
-        pyautogui.moveTo(int((1 - x) * w), int(y * h))
+        x, y = int((1 - x) * w), int(y * h)
+        x, y = min(max(x, 2), w - 2), min(max(y, 2), h - 2)
+        pyautogui.moveTo(x, y)
 
 
 class Click(Action):
