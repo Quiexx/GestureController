@@ -1,3 +1,5 @@
+import os.path
+
 import cv2
 import json
 import numpy as np
@@ -32,17 +34,28 @@ marks = [
     mp_hands.HandLandmark.PINKY_TIP,
 ]
 
-dataset_file = "gesture_ds.json"
-with open("gesture_ds.json", "r") as f:
-    ds = json.load(f)
+# dataset_file = "gesture_ds.json"
+# with open("gesture_ds.json", "r") as f:
+#     ds = json.load(f)
+#
+# if ds is None:
+#     shot_count_dict = {}
+#     ds = {}
+#     with open("gesture_ds.json", "w") as f:
+#         json.dump({}, f)
+# else:
+#     shot_count_dict = {int(code): len(d) for code, d in ds.items()}
 
-if ds is None:
-    shot_count_dict = {}
-    ds = {}
-    with open("gesture_ds.json", "w") as f:
-        json.dump({}, f)
-else:
-    shot_count_dict = {int(code): len(d) for code, d in ds.items()}
+gesture_dir = "data"
+gesture_count = 9
+shot_count_dict = {}
+
+for gest_num in range(gesture_count):
+    gest_data_path = os.path.join(gesture_dir, str(gest_num))
+    if not os.path.exists(gest_data_path):
+        os.mkdir(gest_data_path)
+
+    shot_count_dict[gest_num] = len(os.listdir(gest_data_path))
 
 with open("gestures_ru.json", "r", encoding="utf-8") as f:
     gesture_dict = json.load(f)
@@ -57,7 +70,7 @@ for name in gesture_names:
     im = cv2.cvtColor(im, cv2.COLOR_RGB2BGR)
     gesture_snapshots.append(im)
 
-shots_per_gesture = 300
+shots_per_gesture = 1200
 shots_made = 0
 
 current_gesture = 0
@@ -82,15 +95,21 @@ with mp_hands.Hands(
         image.flags.writeable = True
 
         coords = []
+        mirror_coords = []
 
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         if results.multi_hand_landmarks:
             hand_landmarks = results.multi_hand_landmarks[0]
 
             for mark in marks:
-                x, y = hand_landmarks.landmark[mark].x, hand_landmarks.landmark[mark].y
+                x, y, z = hand_landmarks.landmark[mark].x, hand_landmarks.landmark[mark].y, hand_landmarks.landmark[
+                    mark].z
                 coords.append(x)
                 coords.append(y)
+                coords.append(z)
+                mirror_coords.append(1 - x)
+                mirror_coords.append(y)
+                mirror_coords.append(z)
 
             mp_drawing.draw_landmarks(
                 image,
@@ -143,20 +162,18 @@ with mp_hands.Hands(
         if key == 27:
             break
         elif key == 32:
-            with open(dataset_file, "w") as ds_f:
-                gest_name = gesture_names[current_gesture]
-                gest_code = gesture_dict[gest_name]
+            gest_name = gesture_names[current_gesture]
+            gest_code = gesture_dict[gest_name]
 
-                ds_gest = ds.get(str(gest_code), [])
-                if coords:
-                    ds_gest.append(coords)
+            if coords:
+                gest_count = shot_count_dict.get(gest_code, 0)
+                coords_path = os.path.join(gesture_dir, str(gest_code), str(gest_count) + ".npy")
+                mir_coords_path = os.path.join(gesture_dir, str(gest_code), str(gest_count + 1) + ".npy")
 
-                    ds[str(gest_code)] = ds_gest
+                np.save(coords_path, coords)
+                np.save(mir_coords_path, mirror_coords)
 
-                    json.dump(ds, ds_f)
-
-                    shot_count_dict[gest_code] = shot_count_dict.get(gest_code, 0)
-                    shot_count_dict[gest_code] += 1
+                shot_count_dict[gest_code] = gest_count + 2
 
         elif key == 9:
             current_gesture += 1
