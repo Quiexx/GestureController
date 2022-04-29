@@ -64,7 +64,7 @@ test_data = GesturesDataset(y_test, X_test, transform=torch.from_numpy)
 #     nn.Softmax(dim=1)
 # )
 
-# 3D Nonlinear
+# 3D with nonlinearity
 model = nn.Sequential(
     nn.BatchNorm1d(63),
     nn.Linear(63, 100),

@@ -13,45 +13,86 @@ from src.app.model.classifier.gesture import GestureClassifier
 
 
 class ModelManager(ABC):
+    """
+    Class that operates with NN models
+    """
 
     @abstractmethod
     def handle_image(self, image: ndarray) -> ndarray:
+        """
+        Handle an image
+        :param image: image to handle
+        :return: handled image
+        """
         pass
 
     @property
     @abstractmethod
     def draw_hands(self) -> bool:
+        """
+        Determines whether to draw hand landmarks
+        :return: True if hand landmarks drawing is on else False
+        """
         pass
 
     @draw_hands.setter
     @abstractmethod
     def draw_hands(self, value: bool) -> None:
+        """
+        Set draw_hands property
+        :param value: bool
+        :return: None
+        """
         pass
 
     @property
     @abstractmethod
     def draw_result(self) -> bool:
+        """
+        Determines whether to draw result of prediction
+        :return: True if result of prediction drawing is on else False
+        """
         pass
 
     @draw_result.setter
     @abstractmethod
     def draw_result(self, value: bool) -> None:
+        """
+        Set draw_result property
+        :param value: bool
+        :return: None
+        """
         pass
 
     @property
     @abstractmethod
     def show_image(self) -> bool:
+        """
+        Determines whether to show image from camera
+        :return: True if camera image showing is on else False
+        """
         pass
 
     @show_image.setter
     @abstractmethod
     def show_image(self, value: bool) -> None:
+        """
+        Set show_image property
+        :param value: bool
+        :return: None
+        """
         pass
 
 
 class GestureModelManager(ModelManager):
+    """
+    Manager that uses mediapipe hands and GestureClassifier to handle images
+    """
 
     def __init__(self) -> None:
+        """
+        Creates GestureModelManager
+        """
         self._mp_hands = mp.solutions.hands
         self._mp_drawing = mp.solutions.drawing_utils
         self._mp_drawing_styles = mp.solutions.drawing_styles
@@ -63,35 +104,72 @@ class GestureModelManager(ModelManager):
 
     @property
     def draw_hands(self) -> bool:
+        """
+        Determines whether to draw hand landmarks
+        :return: True if hand landmarks drawing is on else False
+        """
         return self._draw_hands
 
     @draw_hands.setter
     def draw_hands(self, value: bool) -> None:
+        """
+        Set draw_hands property
+        :param value: bool
+        :return: None
+        """
         self._draw_hands = value
 
     @property
     def draw_result(self) -> bool:
+        """
+        Determines whether to draw result of prediction
+        :return: True if result of prediction drawing is on else False
+        """
         return self._draw_pred_res
 
     @draw_result.setter
     def draw_result(self, value: bool) -> None:
+        """
+        Set draw_result property
+        :param value: bool
+        :return: None
+        """
         self._draw_pred_res = value
 
     @property
     def show_image(self) -> bool:
+        """
+        Determines whether to show image from camera
+        :return: True if camera image showing is on else False
+        """
         return self._show_image
 
     @show_image.setter
     def show_image(self, value: bool) -> None:
+        """
+        Set show_image property
+        :param value: bool
+        :return: None
+        """
         self._show_image = value
 
     def handle_image(self, image: ndarray) -> ndarray:
+        """
+        Handle an image
+        :param image: image to handle
+        :return: handled image
+        """
         image, gest_num, data = self.get_gesture(image)
         self._gesture_handler.handle(gest_num, data)
 
         return image
 
     def get_gesture(self, image: ndarray) -> tuple[ndarray, Optional[int], list]:
+        """
+        Predicts gesture on the image, draw hand landmarks and result of the prediction on the image if needed
+        :param image: image to predict a gesture on
+        :return: handled image, gesture index, gesture data (landmarks coordinates)
+        """
         flipped_horizontally = False
         gest_num = None
         data = None
