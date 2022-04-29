@@ -1,8 +1,13 @@
 from typing import Any
+import os
+import sys
+print(os.path.abspath("."))
 
 from kivy.app import App
 from kivy.uix.actionbar import ActionBar, ActionButton, ActionView, ActionPrevious, ActionGroup
 from kivy.uix.boxlayout import BoxLayout
+
+sys.path.append(os.path.abspath("."))
 
 from src.app.widgets.recognition_view import RecognitionView
 
