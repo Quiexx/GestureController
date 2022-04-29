@@ -34,18 +34,6 @@ marks = [
     mp_hands.HandLandmark.PINKY_TIP,
 ]
 
-# dataset_file = "gesture_ds.json"
-# with open("gesture_ds.json", "r") as f:
-#     ds = json.load(f)
-#
-# if ds is None:
-#     shot_count_dict = {}
-#     ds = {}
-#     with open("gesture_ds.json", "w") as f:
-#         json.dump({}, f)
-# else:
-#     shot_count_dict = {int(code): len(d) for code, d in ds.items()}
-
 gesture_dir = "data"
 gesture_count = 9
 shot_count_dict = {}

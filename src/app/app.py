@@ -1,12 +1,26 @@
+from typing import Any
+import os
+import sys
+print(os.path.abspath("."))
+
 from kivy.app import App
 from kivy.uix.actionbar import ActionBar, ActionButton, ActionView, ActionPrevious, ActionGroup
 from kivy.uix.boxlayout import BoxLayout
+
+sys.path.append(os.path.abspath("."))
 
 from src.app.widgets.recognition_view import RecognitionView
 
 
 class UI(BoxLayout):
+    """
+    Application UI class
+    """
+
     def __init__(self, **kwargs):
+        """
+        Initialize user interface
+        """
         super().__init__(**kwargs)
 
         # Main layout
@@ -59,30 +73,71 @@ class UI(BoxLayout):
         self.main_layout.add_widget(self.camera)
         self.add_widget(self.main_layout)
 
-    def open_camera(self, obj):
+    def open_camera(self, obj: Any) -> None:
+        """
+        Turn current camera on
+        :param obj: object from which the method was called
+        :return: None
+        """
         self.camera.change_camera(self.cur_cam)
         self.camera.play = True
 
-    def show_camera(self, obj):
+    def show_camera(self, obj: Any) -> None:
+        """
+        Show / hide camera image
+        :param obj: object from which the method was called
+        :return: None
+        """
         self.camera.show_cam = not self.camera.show_cam
 
-    def close_camera(self, obj):
+    def close_camera(self, obj: Any) -> None:
+        """
+        Close current camera
+        :param obj: object from which the method was called
+        :return: None
+        """
         self.camera.close_cam()
         self.camera.play = False
 
-    def change_camera(self, obj):
+    def change_camera(self, obj: Any) -> None:
+        """
+        Switch to another camera
+        :param obj: object from which the method was called
+        :return: None
+        """
         self.cur_cam = (self.cur_cam + 1) % 2
         self.camera.change_camera(self.cur_cam)
 
-    def show_hands(self, obj):
+    def show_hands(self, obj: Any) -> None:
+        """
+        Show / hide hand landmarks
+        :param obj: object from which the method was called
+        :return: None
+        """
         self.camera.show_hands = not self.camera.show_hands
 
-    def show_gesture(self, obj):
+    def show_gesture(self, obj: Any) -> None:
+        """
+        Show / hide recognized gesture
+        :param obj: object from which the method was called
+        :return: None
+        """
         self.camera.show_gesture = not self.camera.show_gesture
 
 
 class GestureController(App):
+    """
+    Main app class
+    """
+
     def build(self):
+        '''Initializes the application; it will be called only once.
+        If this method returns a widget (tree), it will be used as the root
+        widget and added to the window.
+
+        :return:
+            None or a root :class:`~kivy.uix.widget.Widget` instance
+            if no self.root exists.'''
         return UI()
 
 
